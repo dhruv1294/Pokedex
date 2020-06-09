@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RegionListFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/regionList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <com.agrawalsuneet.dotsloader.loaders.AllianceLoader
+        android:id="@+id/progressLoader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:alliance_animDuration="500"
+        app:alliance_distanceMultiplier="4"
+        app:alliance_dotsRadius="20dp"
+        app:alliance_drawOnlyStroke="true"
+        app:alliance_firstDotsColor="@android:color/holo_red_dark"
+        app:alliance_secondDotsColor="@android:color/holo_green_dark"
+        app:alliance_strokeWidth="8dp"
+        app:alliance_thirdDotsColor="@android:color/holo_blue_bright" />
+
+</FrameLayout>

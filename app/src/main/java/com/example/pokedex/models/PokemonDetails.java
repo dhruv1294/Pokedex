@@ -10,6 +10,9 @@ public class PokemonDetails {
     @SerializedName("abilities")
     @Expose
     private List<Ability> abilities = null;
+    @SerializedName("moves")
+    @Expose
+    private List<Move> moves = null;
     @SerializedName("base_experience")
     @Expose
     private Integer baseExperience;
@@ -37,6 +40,9 @@ public class PokemonDetails {
 
     public List<Ability> getAbilities() {
         return abilities;
+    }
+    public List<Move> getMoves() {
+        return moves;
     }
 
     public void setAbilities(List<Ability> abilities) {

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/pokemons"
+            android:title="Pokemons"/>
+        <item
+            android:id="@+id/typeDex"
+            android:title="Type Dex"/>
+        <item
+            android:id="@+id/regionDex"
+            android:title="Region Dex"/>
+        <item android:id="@+id/itemDex"
+            android:title="Item Dex"/>
+        <item android:id="@+id/locationDex"
+            android:title="Location Dex"/>
+    </group>
+
+</menu>

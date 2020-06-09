@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="4dp">
+
+    <com.robertlevonyan.views.chip.Chip
+        android:id="@+id/pokeType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:mcv_chipText="Type"
+        app:mcv_backgroundColor="@color/colorAccent"
+        app:mcv_textColor="@android:color/white"
+
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textSize="16sp"
+
+
+        android:padding="5dp"/>
+
+
+</RelativeLayout>

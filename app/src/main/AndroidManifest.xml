@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PokeDetailsActivity"></activity>
+        <activity android:name=".RegionDetailActivity"></activity>
+        <activity android:name=".TypeDetailActivity" />
+        <activity android:name=".PokeDetailsActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
