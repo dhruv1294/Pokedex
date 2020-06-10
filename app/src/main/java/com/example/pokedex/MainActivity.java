@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.pokedex.RoomDatabase.PokeViewModel;
 import com.example.pokedex.adapters.PokemonListAdapter;
 import com.example.pokedex.models.Data;
 import com.google.android.material.navigation.NavigationView;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpToolBar();
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PokemonListFragment()).commit();
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -57,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.locationDex:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new LocationListFragment()).commit();
+                        drawerLayout.closeDrawers();
+                        break;
+                    case R.id.favourite:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FavouritesFragment()).commit();
                         drawerLayout.closeDrawers();
                         break;
 

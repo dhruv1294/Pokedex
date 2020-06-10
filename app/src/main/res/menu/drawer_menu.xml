@@ -14,6 +14,8 @@
             android:title="Item Dex"/>
         <item android:id="@+id/locationDex"
             android:title="Location Dex"/>
+        <item android:title="Favourites"
+            android:id="@+id/favourite"/>
     </group>
 
 </menu>
