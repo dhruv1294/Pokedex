@@ -35,8 +35,8 @@ public class FavouritesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favourites, container, false);
-        //pokeViewModel = new
-        //pokeViewModel.getAllPoke().observe(requireActivity(), new Observer<List<Poke>>() {
+        pokeViewModel = new ViewModelProvider(this).get(PokeViewModel.class);
+        pokeViewModel.getAllPoke().observe(requireActivity(), new Observer<List<Poke>>() {
             @Override
             public void onChanged(List<Poke> pokes) {
                 Toast.makeText(getActivity(), "OnChanged", Toast.LENGTH_SHORT).show();
