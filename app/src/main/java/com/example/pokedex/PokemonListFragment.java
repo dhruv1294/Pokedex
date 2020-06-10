@@ -1,9 +1,13 @@
 package com.example.pokedex;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,14 +20,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.agrawalsuneet.dotsloader.loaders.AllianceLoader;
+import com.example.pokedex.RoomDatabase.Poke;
+import com.example.pokedex.RoomDatabase.PokeViewModel;
 import com.example.pokedex.adapters.PokemonListAdapter;
 import com.example.pokedex.models.Data;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -36,6 +45,9 @@ AllianceLoader allianceLoader;
 EditText searchText;
     Data pokemon;
     PokemonListAdapter pokemonListAdapter;
+
+    PokeViewModel pokeViewModel;
+
     public PokemonListFragment() {
         // Required empty public constructor
     }
@@ -45,11 +57,13 @@ EditText searchText;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         allianceLoader = view.findViewById(R.id.progressLoader);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         searchText = view.findViewById(R.id.search_text);
+
+        pokeViewModel = ViewModelProviders.of(this).get(PokeViewModel.class);
         getData();
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -67,7 +81,28 @@ EditText searchText;
              filter(s.toString());
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Poke poke = pokemonListAdapter.getFav(viewHolder.getAdapterPosition());
+                String pokeName = poke.getName();
+                String id = poke.getId();
+                String imageUrl = poke.getImageUrl();
+
+              pokeViewModel.insert(poke);
+                Snackbar.make(view,"Successfully added to favourites",Snackbar.LENGTH_SHORT).show();
+
+
+            }
+        }).attachToRecyclerView(recyclerView);
         return view;
+
     }
 
     public void getData(){

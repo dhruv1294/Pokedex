@@ -6,16 +6,21 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher2"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegionDetailActivity"></activity>
-        <activity android:name=".TypeDetailActivity" />
-        <activity android:name=".PokeDetailsActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".RegionDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".TypeDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PokeDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pokedex.MainActivity;
 import com.example.pokedex.PokeDetailsActivity;
 import com.example.pokedex.R;
+import com.example.pokedex.RoomDatabase.Poke;
 import com.example.pokedex.models.Data;
 import com.example.pokedex.models.RegionPokemonList;
 import com.example.pokedex.models.TypePokemonList;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonViewHolder> {
@@ -30,6 +32,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     private List<Data.Pokemon> pokemonList;
     private TypePokemonList typePokemonList;
     private RegionPokemonList regionPokemonList;
+    public List<Poke> favPokemons = new ArrayList<>();
     Activity a;
     int typeList=0;
     public PokemonListAdapter(Context ctx,Activity a,List<Data.Pokemon> pokemons){
@@ -49,6 +52,10 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         this.a =a;
         context = ctx;
         this.regionPokemonList = regionPokemonList;
+    }
+    public PokemonListAdapter(Context ctx){
+        typeList=3;
+        context = ctx;
     }
 
 
@@ -111,7 +118,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
                 }
             });
 
-        }else{
+        }else if(typeList==2){
             final String urlId = regionPokemonList.getPokemonEntries().get(position).getPokemonSpecies().getUrl();
             String result = null;
             if(urlId.length()>0){
@@ -132,6 +139,32 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
                     context.startActivity(intent,optionsCompat.toBundle());
                 }
             });
+        }else{
+            holder.pokemonName.setText(favPokemons.get(position).getName());
+            holder.pokemonId.setText("#"+favPokemons.get(position).getId());
+            Picasso.with(context).load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + favPokemons.get(position).getId() + ".png").into(holder.pokemonImage);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PokeDetailsActivity.class);
+                    intent.putExtra("url", favPokemons.get(position).getImageUrl());
+                    intent.putExtra("position", Integer.parseInt(favPokemons.get(position).getId()));
+                   // ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(a,v.findViewById(R.id.pokemonImage),"pokeImage");
+                    context.startActivity(intent);
+
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_TEXT,"My Favourite Pokemon is " + favPokemons.get(position).getName().toUpperCase()+ " and image url is " + favPokemons.get(position).getImageUrl());
+                    context.startActivity(Intent.createChooser(intent,"Share Using"));
+                    return false;
+                }
+            });
+
         }
     }
 
@@ -141,8 +174,31 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         return pokemonList.size();
         else if(typeList==1)
             return typePokemonList.getPokemon().size();
-        else
+        else if(typeList==2)
             return regionPokemonList.getPokemonEntries().size();
+        else
+            return favPokemons.size();
+    }
+    public void setFavs(List<Poke> pokes){
+        favPokemons = pokes;
+        notifyDataSetChanged();
+    }
+    public Poke getFav(int position){
+        String name = pokemonList.get(position).getName();
+        String url = pokemonList.get(position).getUrl();
+        String result = null;
+        if(url.length()>0){
+            result = url.substring(34,url.length()-1);
+        }
+        String id = result;
+        String imageUrl =  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + result + ".png";
+        return new Poke(name,id,imageUrl);
+    }
+    public Poke removeFav(int position){
+        Poke poke = favPokemons.get(position);
+        favPokemons.remove(position);
+        notifyDataSetChanged();
+       return poke;
     }
 
     public class PokemonViewHolder extends RecyclerView.ViewHolder{
